@@ -1,11 +1,15 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import { readdirSync } from 'fs'
+import fs, { readdirSync } from 'fs'
+import multer from 'multer'
+import path from 'path'
 require("dotenv").config()
 const app = express()
+
 app.use(cors())
 app.use(express.json())
+app.use('/public', express.static(path.join(__dirname, 'public')))
 readdirSync('./routes').map((r) => app.use('/api', require(`./routes/${r}`)))
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.DATABASE, {
