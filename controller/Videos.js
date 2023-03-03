@@ -1,8 +1,11 @@
 import Videos, { } from '../model/Videos'
 export const getAll = async (req, res) => {
     const { userId } = req.params
+    console.log(userId)
     try {
-        const video = await Videos.find({ postedBy: userId })
+        let video = []
+        if (userId === ":all") { video = await Videos.find() }
+        else { video = await Videos.find({ postedBy: userId }) }
         res.json(video)
     } catch (err) {
         console.log(err)
