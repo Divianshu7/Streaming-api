@@ -1,10 +1,15 @@
 import Videos, { } from '../model/Videos'
 export const getAll = async (req, res) => {
     const { userId } = req.params
-    console.log(userId)
+    console.log(userId.substr(1))
     try {
         let video = []
-        if (userId === ":all") { video = await Videos.find() }
+        if (userId === ":all") {
+            video = await Videos.find().populate("postedBy", "_id username")
+        }
+        else if (userId[0] === "o") {
+            video = await Videos.findById(userId.substr(1)).populate("postedBy", "_id username")
+        }
         else { video = await Videos.find({ postedBy: userId }) }
         res.json(video)
     } catch (err) {
@@ -31,5 +36,17 @@ export const create = async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(400).json(err)
+    }
+}
+export const updateLike = async (req, res) => {
+    if (req.params.like != "undefined") {
+        await Videos.findByIdAndUpdate(req.params.videoId, { likes: req.params.like })
+
+    }
+}
+export const updateViews = async (req, res) => {
+    if (req.params.views != "undefined") {
+        await Videos.findByIdAndUpdate(req.params.videoId, { views: req.params.views })
+
     }
 }

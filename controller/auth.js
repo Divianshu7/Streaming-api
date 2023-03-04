@@ -71,3 +71,19 @@ export const allUsers = async (req, res, next) => {
         next(err)
     }
 }
+export const loginWithGoogle = async (req, res) => {
+    try {
+        const { email } = req.body
+        console.log(email)
+        const user = await User.findOne({ email }).exec()
+        if (!user) {
+            return res.json({ msg: 'Incorrect email ,register first', status: false })
+        } else {
+            user.password = ""
+            return res.json({ status: true, user })
+        }
+    } catch (err) {
+        console.log('registeration error==> ', err)
+        next(err)
+    }
+}

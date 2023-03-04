@@ -2,7 +2,6 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import fs, { readdirSync } from 'fs'
-import multer from 'multer'
 import path from 'path'
 require("dotenv").config()
 const app = express()
@@ -23,4 +22,4 @@ mongoose.connect(process.env.DATABASE, {
     // family: 4 // Use IPv4, skip trying IPv6
 }).then(() => console.log('connected DB')).catch((err) => console.log("error is ", err))
 
-app.listen(5000, () => console.log('Server running at 5000'))
+const server = app.listen(5000, () => console.log('Server running at 5000'))

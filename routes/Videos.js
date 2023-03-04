@@ -2,7 +2,7 @@ import express from 'express'
 import fs from 'fs'
 import multer from 'multer'
 import path from 'path'
-import { create, getAll } from '../controller/Videos'
+import { create, getAll, updateLike, updateViews } from '../controller/Videos'
 const router = express.Router()
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -29,6 +29,8 @@ const upload = multer({
     }
 })
 router.get('/all/:userId', getAll)
+router.post('/updateLike/:like/:videoId', updateLike)
+router.post('/updateViews/:views/:videoId', updateViews)
 router.post("/create", upload.fields([
     {
         name: "videos",
