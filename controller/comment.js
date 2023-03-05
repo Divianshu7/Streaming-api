@@ -24,6 +24,7 @@ export const getcomment = async (req, res) => {
 }
 export const replycomment = async (req, res) => {
     const { id, userId } = req.params
+    console.log(req.body.replyc)
     const comment = req.body.replyc
     const reply = await Comment.create({
         comment,

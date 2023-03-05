@@ -87,3 +87,7 @@ export const loginWithGoogle = async (req, res) => {
         next(err)
     }
 }
+export const connect = async (req, res) => {
+    console.log('connected')
+    res.status(200).send()
+}
